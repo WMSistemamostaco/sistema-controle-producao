@@ -1,0 +1,14 @@
+[
+  {
+    "ordem": "OP-001",
+    "produto": "Calça Jeans Slim",
+    "quantidade": 150,
+    "status": "Em Produção"
+  },
+  {
+    "ordem": "OP-002",
+    "produto": "Calça Jeans Comfort",
+    "quantidade": 200,
+    "status": "Aguardando"
+  }
+]
