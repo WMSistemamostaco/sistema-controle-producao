@@ -1,2 +1,2 @@
 # sistema-controle-producao
-API e Frontend para um sistema de controle de produção
+API e full-stack com autenticação para um sistema de controle de produção
