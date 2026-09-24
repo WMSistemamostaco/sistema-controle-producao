@@ -1,14 +1,22 @@
 {
-  "name": "backend",
+  "name": "controle-producao-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API REST para sistema de controle de produção",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "node",
+    "express",
+    "api",
+    "producao",
+    "sequelize",
+    "sqlite"
+  ],
+  "author": "Wilian Mostaço",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
