@@ -1,24 +1,110 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
-const PORT = 3000;
+const express = require("express");
+const cors = require("cors");
 
-// Configura as opções do CORS
-const corsOptions = {
-  origin: '*', // Permite que qualquer origem acesse a API
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-};
+const sequelize = require("./config/database");
+const productionRoutes =
+    require("./routes/productionRoutes");
 
-// Usa o CORS com as opções configuradas
-app.use(cors(corsOptions));
+const app =
+    express();
 
-// Importar as rotas
-const productionRoutes = require('./routes/productionRoutes');
+const PORT =
+    process.env.PORT || 3000;
 
-// Usar as rotas no endpoint /api/production (A LINHA CRÍTICA)
-app.use('/api/production', productionRoutes);
 
-// Iniciar o servidor
-app.listen(PORT, () => {
-  console.log(`🚀 Backend pronto e rodando na porta ${PORT}`);
-});
+/* ==========================================
+   MIDDLEWARES
+========================================== */
+
+app.use(
+    cors()
+);
+
+app.use(
+    express.json()
+);
+
+app.use(
+    express.urlencoded({
+        extended: true
+    })
+);
+
+
+/* ==========================================
+   ROTA DE TESTE
+========================================== */
+
+app.get(
+    "/",
+    (req, res) => {
+
+        res.json({
+            message:
+                "API Controle de Produção",
+            status:
+                "online"
+        });
+
+    }
+);
+
+
+/* ==========================================
+   ROTAS
+========================================== */
+
+app.use(
+    "/api/production",
+    productionRoutes
+);
+
+
+/* ==========================================
+   INICIALIZAÇÃO
+========================================== */
+
+async function startServer() {
+
+    try {
+
+        await sequelize.authenticate();
+
+        console.log(
+            "✅ Banco de dados conectado."
+        );
+
+
+        await sequelize.sync();
+
+        console.log(
+            "✅ Tabelas sincronizadas."
+        );
+
+
+        app.listen(
+            PORT,
+            () => {
+
+                console.log(
+                    `🚀 API rodando em http://localhost:${PORT}`
+                );
+
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "❌ Erro ao iniciar servidor:",
+            error
+        );
+
+        process.exit(1);
+
+    }
+
+}
+
+
+startServer();
