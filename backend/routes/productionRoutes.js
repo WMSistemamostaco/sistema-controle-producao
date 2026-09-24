@@ -1,17 +1,45 @@
-const express = require('express');
-const router = express.Router();
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
 
-router.get('/', (req, res) => {
-  const dataPath = path.join(__dirname, '..', 'data', 'producao.json');
-  fs.readFile(dataPath, 'utf8', (err, data) => {
-    if (err) {
-      console.error("Erro ao ler o arquivo de dados:", err);
-      return res.status(500).send('Erro interno do servidor.');
-    }
-    res.json(JSON.parse(data));
-  });
-});
+const {
+    getAllProductions,
+    getProductionById,
+    createProduction,
+    updateProduction,
+    deleteProduction
+} = require("../controllers/productionController");
 
-module.exports = router; // A LINHA CRÍTICA
+const router =
+    express.Router();
+
+
+router.get(
+    "/",
+    getAllProductions
+);
+
+
+router.get(
+    "/:id",
+    getProductionById
+);
+
+
+router.post(
+    "/",
+    createProduction
+);
+
+
+router.put(
+    "/:id",
+    updateProduction
+);
+
+
+router.delete(
+    "/:id",
+    deleteProduction
+);
+
+
+module.exports = router;
